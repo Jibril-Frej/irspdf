@@ -1,2 +1,2 @@
-# IRS_pdf
+# irspdf
 Information retireval system for pdf documents
