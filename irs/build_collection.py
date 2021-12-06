@@ -4,7 +4,8 @@ from irs.collection import Collection
 
 
 def main():
-    collection = Collection(sys.argv[1])
+    collection = Collection()
+    collection.build_collection(sys.argv[1])
     pkl.dump(collection, open(sys.argv[2], "wb"))
 
 

@@ -14,22 +14,28 @@ class Collection:
         vocabulary: contains all the words in the collection
         inverted_index: inverted index of the collection
         doc_length: contains all the length of all the document
+        avg_doc_length: average length of documents in the collection
         min_freq: min number of occurences for a word to be in the vocabulary
         idf: inverted document frequency of all words
         stops: set of stopwords to be deleterd from the vocabulary
         num_docs: total number of documents in the collection
 
     """
-    def __init__(self, path):
-        """init
-
-        Args:
-            path: folder containing all pdf files used to build the collection
+    def __init__(self):
+        """Initialise max_length, min_freq and stops
 
         """
         self.max_length = 30
         self.min_freq = 5
         self.stops = set(stopwords.words('english'))
+
+    def build_collection(self, path=None):
+        """Builds the collection from the pdf files in the folder path
+
+        Args:
+            path: folder containing all pdf files used to build the collection
+
+        """
         self.vocabulary = Counter()
         self.read_all_pdfs(path)
         self.remove_low_freq()
@@ -121,3 +127,44 @@ class Collection:
         for words, posting_lists in self.inverted_index.items():
             for doc, freq in posting_lists:
                 self.doc_length[doc] += freq
+        self.avg_doc_length = sum([val for val in self.doc_length.values()])
+        self.avg_doc_length /= len(self.doc_length)
+
+    def score_BM25(self, word_id, doc, freq, k1, b):
+        """Computes the BM25 score of a term in a document
+
+        Args:
+            word_id: id of the word in the inverted index
+            doc: document name
+            freq: frequency of the word in the document
+            k1: BM25 parameter must be a positive real value
+            b: BM25 parameter must be in [0,1]
+
+        Returns: The BM25 score
+
+        """
+        score = self.idf[word_id]*(k1+1)*freq
+        score /= freq+k1*((1-b)+b*self.doc_length[doc]/self.avg_doc_length)
+        return score
+
+    def BM25(self, query, k1=1.2, b=0.75):
+        """Compute the BM25 score of all the documents with rtespect to a query
+
+        Args:
+            query: the query as a string
+            k1: BM25 parameter must be a positive real value
+            b: BM25 parameter must be in [0,1]
+
+        Returns: A counter of the document and their BM25 score
+
+        """
+        query = word_tokenize(query)
+        results = Counter()
+        for word in query:
+            if word in self.vocabulary:
+                word_id = self.vocabulary[word]
+                for doc, freq in self.inverted_index[word_id]:
+                    results[doc] += self.score_BM25(word_id, doc, freq, k1, b)
+        for doc, score in results.most_common():
+            print(f'{doc} : {score}')
+        return results
