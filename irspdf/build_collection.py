@@ -1,6 +1,6 @@
 import sys
 import pickle as pkl
-from irs.collection import Collection
+from irspdf.collection import Collection
 
 
 def main():

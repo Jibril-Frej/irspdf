@@ -2,7 +2,7 @@ import os
 import numpy as np
 import pdfplumber
 from nltk import word_tokenize
-from nltk.corpus import stopwords
+from stop_words import get_stop_words
 from collections import Counter, defaultdict
 
 
@@ -27,7 +27,7 @@ class Collection:
         """
         self.max_length = 30
         self.min_freq = 5
-        self.stops = set(stopwords.words('english'))
+        self.stops = get_stop_words('en')
 
     def build_collection(self, path=None):
         """Builds the collection from the pdf files in the folder path
