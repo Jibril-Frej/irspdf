@@ -1,2 +1,7 @@
 # irspdf
-Information retireval system for pdf documents
+A simple textual information retrieval system for pdf documents.
+
+## Installation
+```
+pip install irspdf
+```

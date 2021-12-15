@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = '0.1.5'
+VERSION = '0.2.0'
 DESCRIPTION = 'Information retrieval system for pdf documents'
 
 
@@ -11,7 +11,7 @@ setup(
     author_email="<frejjibril@gmail.com>",
     description=DESCRIPTION,
     packages=['irspdf'],
-    install_requires=['nltk', 'numpy', 'pdfplumber', 'stop_words'],
+    install_requires=['numpy', 'pdfplumber', 'stop_words'],
     keywords=['python', 'information retrieval'],
     classifiers=[
         'Programming Language :: Python :: 3'

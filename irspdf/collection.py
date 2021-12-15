@@ -1,7 +1,8 @@
+import re
 import os
+import pickle as pkl
 import numpy as np
 import pdfplumber
-from nltk import word_tokenize
 from stop_words import get_stop_words
 from collections import Counter, defaultdict
 
@@ -29,7 +30,7 @@ class Collection:
         self.min_freq = 5
         self.stops = get_stop_words('en')
 
-    def build_collection(self, path=None):
+    def build_collection(self, path):
         """Builds the collection from the pdf files in the folder path
 
         Args:
@@ -69,11 +70,11 @@ class Collection:
         print(f"Reading {path} as {docname}")
         with pdfplumber.open(path) as pdf:
             for i, page in enumerate(pdf.pages):
-                text = page.extract_text()
-                text = word_tokenize(text)
-                for word in text:
+                text = re.sub(r"[^a-zA-Z0-9,\-/]", " ", page.extract_text())
+                for word in text.split():
+                    word = word.lower()
                     if (len(word) < self.max_length and len(word) > 1
-                            and word.lower() not in self.stops):
+                            and word not in self.stops):
                         self.inverted_index[word][docname] += 1
                         self.vocabulary[word] += 1
 
@@ -103,7 +104,7 @@ class Collection:
         self.inverted_index = temp_inverted_index
 
     def get_idf(self, word):
-        """Computes the idf of a single word
+        """Computes the smoothed idf of a single word
 
         Args:
             word: int of the associated word
@@ -111,7 +112,7 @@ class Collection:
         Returns: idf of word
 
         """
-        return np.log((self.num_docs + 1)/(1+len(self.inverted_index[word])))
+        return 1 + np.log((self.num_docs)/(1+len(self.inverted_index[word])))
 
     def compute_idfs(self):
         """Compute the idf of all words in the vocabulary
@@ -158,9 +159,10 @@ class Collection:
         Returns: A counter of the document and their BM25 score
 
         """
-        query = word_tokenize(query)
+        query = re.sub(r"[^a-zA-Z0-9,\-/]", " ", query)
         results = Counter()
-        for word in query:
+        for word in query.split():
+            word = word.lower()
             if word in self.vocabulary:
                 word_id = self.vocabulary[word]
                 for doc, freq in self.inverted_index[word_id]:
@@ -168,3 +170,33 @@ class Collection:
         for doc, score in results.most_common():
             print(f'{doc} : {score}')
         return results
+
+
+def build_collection(folder_path, pkl_path):
+    """Builds and save a collection
+
+    Args:
+        folder_path: folder containing all pdf files used to build the
+        collection
+
+        pkl_path: pkl file were the collection will be saved
+
+    """
+    collection = Collection()
+    collection.build_collection(path=folder_path)
+    pkl.dump(collection, open(pkl_path, 'wb'))
+
+
+def query_collection(collection_path):
+    """Reads the collection and print the documents ranked by relevance with
+    respect to the query
+
+    Args:
+        collection_path: Path of the collection file saved with pickle
+
+    """
+    collection = pkl.load(open(collection_path, "rb"))
+    query = input("Enter your query (enter exit to leave) :")
+    while query != "exit":
+        collection.BM25(query)
+        query = input("Enter your query (enter exit to leave) :")
