@@ -1,13 +1,17 @@
-import sys
 import pickle as pkl
-from irspdf.collection import Collection
+from .collection import Collection
 
 
-def main():
+def build_collection(folder_path, pkl_path):
+    """Builds and save a collection
+
+    Args:
+        folder_path: folder containing all pdf files used to build the
+        collection
+
+        pkl_path: pkl file were the collection will be saved
+
+    """
     collection = Collection()
-    collection.build_collection(sys.argv[1])
-    pkl.dump(collection, open(sys.argv[2], "wb"))
-
-
-if __name__ == "__main__":
-    main()
+    collection.build_collection(path=folder_path)
+    pkl.dump(collection, open(pkl_path, 'wb'))

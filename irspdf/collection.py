@@ -1,6 +1,5 @@
 import re
 import os
-import pickle as pkl
 import numpy as np
 import pdfplumber
 from stop_words import get_stop_words
@@ -170,33 +169,3 @@ class Collection:
         for doc, score in results.most_common():
             print(f'{doc} : {score}')
         return results
-
-
-def build_collection(folder_path, pkl_path):
-    """Builds and save a collection
-
-    Args:
-        folder_path: folder containing all pdf files used to build the
-        collection
-
-        pkl_path: pkl file were the collection will be saved
-
-    """
-    collection = Collection()
-    collection.build_collection(path=folder_path)
-    pkl.dump(collection, open(pkl_path, 'wb'))
-
-
-def query_collection(collection_path):
-    """Reads the collection and print the documents ranked by relevance with
-    respect to the query
-
-    Args:
-        collection_path: Path of the collection file saved with pickle
-
-    """
-    collection = pkl.load(open(collection_path, "rb"))
-    query = input("Enter your query (enter exit to leave) :")
-    while query != "exit":
-        collection.BM25(query)
-        query = input("Enter your query (enter exit to leave) :")

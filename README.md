@@ -19,16 +19,16 @@ cd irspdf && python setup.py install
 ### Build a collection
 
 ```
-from irspdf.collection import build_collection
-build_collection(data_folder, collection_file)
+from irspdf import build_collection
+build_collection(folder_path, collection_path)
 ```
-data_folder : path of the folder that contains all the pdf files to include to the collection.
+folder_path : path of the folder that contains all the pdf files to include to the collection.
 
-collection_file : file where the collection will be saved
+collection_path : file where the collection will be saved
 
 ### Query the collection
 
 ```
-from irspdf.collection import query_collection
-query_collection(collection_file)
+from irspdf import query_collection
+query_collection(collection_path)
 ```
