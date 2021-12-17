@@ -1,3 +1,4 @@
-from .build_collection import build_collection
-from .query_collection import query_collection
-from .collection import Collection
+from .build import build
+from .query import query
+from .update import update
+from .ir_collection import IRCollection

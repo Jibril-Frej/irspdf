@@ -1,8 +1,8 @@
 import pickle as pkl
-from .collection import Collection
+from .ir_collection import IRCollection
 
 
-def build_collection(folder_path, pkl_path):
+def build(folder_path, pkl_path):
     """Builds and save a collection
 
     Args:
@@ -12,6 +12,5 @@ def build_collection(folder_path, pkl_path):
         pkl_path: pkl file were the collection will be saved
 
     """
-    collection = Collection()
-    collection.build_collection(path=folder_path)
+    collection = IRCollection(folder_path)
     pkl.dump(collection, open(pkl_path, 'wb'))

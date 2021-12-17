@@ -1,12 +1,12 @@
 import pickle as pkl
 
 
-def query_collection(collection_path):
+def query(collection_path):
     """Reads the collection and print the documents ranked by relevance with
     respect to the query
 
     Args:
-        collection_path: Path of the collection file saved with pickle
+        collection_path: Path of the collection file
 
     """
     collection = pkl.load(open(collection_path, "rb"))

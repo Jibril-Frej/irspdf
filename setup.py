@@ -1,6 +1,6 @@
 from setuptools import setup
 
-VERSION = '0.2.4'
+VERSION = '0.2.7'
 DESCRIPTION = 'Information retrieval system for pdf documents'
 
 

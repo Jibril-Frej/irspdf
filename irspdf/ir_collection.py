@@ -6,7 +6,7 @@ from stop_words import get_stop_words
 from collections import Counter, defaultdict
 
 
-class Collection:
+class IRCollection:
     """Builds a text IR collection from a set of pdf files.
 
     Attributes:
@@ -21,13 +21,16 @@ class Collection:
         num_docs: total number of documents in the collection
 
     """
-    def __init__(self):
-        """Initialise max_length, min_freq and stops
+    def __init__(self, path=None):
+        """Initialise max_length, min_freq and stops, if path is set to a
+        value, builds the collection from the pdf files in the folder path
 
         """
         self.max_length = 30
         self.min_freq = 5
         self.stops = get_stop_words('en')
+        if path:
+            self.build_collection(path)
 
     def build_collection(self, path):
         """Builds the collection from the pdf files in the folder path
@@ -169,3 +172,31 @@ class Collection:
         for doc, score in results.most_common():
             print(f'{doc} : {score}')
         return results
+
+    def update(self, collection):
+        """Updates the IRCollection with documents from a new IRCollection
+        WARNING: The documents in the new IRCollection must be different from
+        the documents in the original IRCollection
+
+        Args:
+            collection: IRCollection object that contains the documents to
+            update to the collection with
+
+        """
+        nb_words = len(self.vocabulary)
+        for word, index in collection.vocabulary.items():
+            if word not in self.vocabulary:
+                self.vocabulary[word] = nb_words
+                self.inverted_index[nb_words] =\
+                    collection.inverted_index[index]
+                nb_words += 1
+            else:
+                oindex = self.vocabulary[word]
+                self.inverted_index[oindex] += collection.inverted_index[index]
+
+        for doc, length in collection.doc_length.items():
+            self.doc_length[doc] = length
+
+        self.avg_doc_length = sum([val for val in self.doc_length.values()])
+        self.avg_doc_length /= len(self.doc_length)
+        self.compute_idfs()
