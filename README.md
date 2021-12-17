@@ -33,6 +33,8 @@ from irspdf import query
 query(collection_path)
 ```
 
+collection_path : file where the collection is saved
+
 ### Update the collection
 
 ```
@@ -41,3 +43,4 @@ update(folder_path, collection_path)
 ```
 
 folder_path : path of the folder that contains all the pdf files to add to the collection.
+collection_path : file where the original collection is saved
