@@ -1,6 +1,8 @@
 # irspdf
 A simple textual information retrieval system for pdf documents.
 
+The ranking function used is BM25.
+
 ## Installation
 
 ### Install with pip
@@ -43,4 +45,5 @@ update(folder_path, collection_path)
 ```
 
 folder_path : path of the folder that contains all the pdf files to add to the collection.
+
 collection_path : file where the original collection is saved
