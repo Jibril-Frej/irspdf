@@ -4,7 +4,7 @@ from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
-VERSION = '0.3.0'
+VERSION = '0.3.2'
 DESCRIPTION = 'A simple information retrieval system for pdf documents'
 
 
@@ -17,7 +17,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     packages=['irspdf'],
-    install_requires=['numpy', 'pdfplumber', 'stop_words'],
+    install_requires=['numpy', 'pdfplumber', 'stop_words', 'snowballstemmer'],
     keywords=['python', 'information retrieval'],
     classifiers=[
         'Programming Language :: Python :: 3'

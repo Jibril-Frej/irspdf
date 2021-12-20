@@ -10,7 +10,7 @@ def query(collection_path):
 
     """
     collection = pkl.load(open(collection_path, "rb"))
-    query = input("Enter your query (enter exit to leave) :")
-    while query != "exit":
+    query = input("Enter your query (enter $exit to leave) :")
+    while query != "$exit":
         collection.BM25(query)
         query = input("Enter your query (enter exit to leave) :")

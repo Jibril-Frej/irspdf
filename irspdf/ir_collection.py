@@ -4,6 +4,7 @@ import numpy as np
 import pdfplumber
 from stop_words import get_stop_words
 from collections import Counter, defaultdict
+import snowballstemmer
 
 
 class IRCollection:
@@ -29,6 +30,7 @@ class IRCollection:
         self.max_length = 30
         self.min_freq = 5
         self.stops = get_stop_words('en')
+        self.stemmer = snowballstemmer.stemmer('english')
         if path:
             self.build_collection(path)
 
@@ -73,7 +75,7 @@ class IRCollection:
         with pdfplumber.open(path) as pdf:
             for i, page in enumerate(pdf.pages):
                 text = re.sub(r"[^a-zA-Z0-9,\-/]", " ", page.extract_text())
-                for word in text.split():
+                for word in self.stemmer.stemWords(text.split()):
                     word = word.lower()
                     if (len(word) < self.max_length and len(word) > 1
                             and word not in self.stops):
@@ -163,7 +165,7 @@ class IRCollection:
         """
         query = re.sub(r"[^a-zA-Z0-9,\-/]", " ", query)
         results = Counter()
-        for word in query.split():
+        for word in self.stemmer.stemWords(query.split()):
             word = word.lower()
             if word in self.vocabulary:
                 word_id = self.vocabulary[word]
