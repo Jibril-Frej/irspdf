@@ -7,9 +7,7 @@ Standard text preprocessing for information retrieval is applied:
 * Punctuation removal
 * Lowercase conversion
 
-The ranking function used is BM25 :
-
-$$ BM25(q, d) = \sum_{t \in q}idf_t \cdot \frac{tf_{t,d}\cdot(k_1 + 1)}{tf_{t,d} + k_1 \cdot((1-b)\cdot\frac{|d|}{avgdl}) } $$
+The ranking function used is BM25.
 
 ## Installation
 

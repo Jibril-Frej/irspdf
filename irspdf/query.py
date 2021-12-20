@@ -13,4 +13,4 @@ def query(collection_path):
     query = input("Enter your query (enter $exit to leave) :")
     while query != "$exit":
         collection.BM25(query)
-        query = input("Enter your query (enter exit to leave) :")
+        query = input("Enter your query (enter $exit to leave) :")
