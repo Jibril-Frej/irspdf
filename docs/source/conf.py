@@ -11,7 +11,7 @@ version = '0.3.6'
 
 # -- General configuration
 
-autodoc_mock_imports = ["django"]
+autodoc_mock_imports = ["irspdf"]
 
 extensions = [
     'sphinx.ext.duration',
