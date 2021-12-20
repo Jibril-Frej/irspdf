@@ -11,6 +11,8 @@ version = '0.3.6'
 
 # -- General configuration
 
+autodoc_mock_imports = ["django"]
+
 extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.doctest',
