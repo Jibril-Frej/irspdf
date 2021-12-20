@@ -2,9 +2,9 @@ import re
 import os
 import numpy as np
 import pdfplumber
+import snowballstemmer
 from stop_words import get_stop_words
 from collections import Counter, defaultdict
-import snowballstemmer
 
 
 class IRCollection:
@@ -12,13 +12,21 @@ class IRCollection:
 
     Attributes:
         max_length: max number of char in a valid word
+
         vocabulary: contains all the words in the collection
+
         inverted_index: inverted index of the collection
+
         doc_length: contains all the length of all the document
+
         avg_doc_length: average length of documents in the collection
+
         min_freq: min number of occurences for a word to be in the vocabulary
+
         idf: inverted document frequency of all words
+
         stops: set of stopwords to be deleterd from the vocabulary
+
         num_docs: total number of documents in the collection
 
     """
@@ -68,6 +76,7 @@ class IRCollection:
 
         Args:
             path: pdf file location
+
             docname: name that will be given to the document
 
         """
@@ -140,10 +149,15 @@ class IRCollection:
 
         Args:
             word_id: id of the word in the inverted index
+
             doc: document name
+
             freq: frequency of the word in the document
+
             k1: BM25 parameter must be a positive real value
+
             b: BM25 parameter must be in [0,1]
+
 
         Returns: The BM25 score
 
@@ -152,13 +166,20 @@ class IRCollection:
         score /= freq+k1*((1-b)+b*self.doc_length[doc]/self.avg_doc_length)
         return score
 
-    def BM25(self, query, k1=1.2, b=0.75):
+    def BM25(self, query, k1=1.2, b=0.75, k=1000, display=True):
         """Compute the BM25 score of all the documents with rtespect to a query
 
         Args:
             query: the query as a string
+
             k1: BM25 parameter must be a positive real value
+
             b: BM25 parameter must be in [0,1]
+
+            k: max number of documents to return
+
+            display: if set to true will print top-k document with their score
+
 
         Returns: A counter of the document and their BM25 score
 
@@ -171,12 +192,16 @@ class IRCollection:
                 word_id = self.vocabulary[word]
                 for doc, freq in self.inverted_index[word_id]:
                     results[doc] += self.score_BM25(word_id, doc, freq, k1, b)
-        for doc, score in results.most_common():
-            print(f'{doc} : {score}')
+        if display:
+            for doc, score in results.most_common(k):
+                print(f'{doc} : {score}')
+            if not results:
+                print(f'Not document found for the query : {query}')
         return results
 
     def update(self, collection):
         """Updates the IRCollection with documents from a new IRCollection
+
         WARNING: The documents in the new IRCollection must be different from
         the documents in the original IRCollection
 

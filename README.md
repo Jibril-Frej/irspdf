@@ -1,6 +1,8 @@
 # irspdf
 A simple textual information retrieval system for pdf documents.
 
+Text is extracted from pdf with pdfplumber.
+
 Standard text preprocessing for information retrieval is applied:
 * StopWord removal
 * Stemming 
