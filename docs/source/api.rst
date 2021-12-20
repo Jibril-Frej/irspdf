@@ -4,4 +4,6 @@ API
 .. autosummary::
    :toctree: generated
 
-   irspdf 
+   irspdf.ir_collection
+   irspdf.query
+   irspdf.build
