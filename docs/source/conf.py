@@ -11,7 +11,7 @@ version = '0.3.5'
 
 # -- General configuration
 
-autodoc_mock_imports = ['yaml', 'foobar']
+autodoc_mock_imports = ['numpy']
 
 extensions = [
     'sphinx.ext.duration',
