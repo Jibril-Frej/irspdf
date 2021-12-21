@@ -1,0 +1,4 @@
+pdfplumber
+snowballstemmer
+stop-words
+numpy
