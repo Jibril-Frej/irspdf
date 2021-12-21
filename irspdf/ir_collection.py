@@ -1,6 +1,6 @@
 import re
 import os
-import numpy as np
+#import numpy as np
 import pdfplumber
 import snowballstemmer
 from stop_words import get_stop_words
