@@ -7,8 +7,9 @@ build:
 
 python:
   # Install our python package before building the docs
+  version: 3.8
   install:
-    - requirements: requirements.txt
+    - requirements: docs/requirements.txt
     - method: pip
       path: .
 
