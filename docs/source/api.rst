@@ -1,6 +1,10 @@
 API
 ===
 
+.. currentmodule:: irspdf
+.. automodule:: irspdf
+
+
 .. autosummary::
    :toctree: generated
 
