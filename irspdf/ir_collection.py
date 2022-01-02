@@ -158,7 +158,6 @@ class IRCollection:
 
             b: BM25 parameter must be in [0,1]
 
-
         Returns: The BM25 score
 
         """
@@ -179,7 +178,6 @@ class IRCollection:
             k: max number of documents to return
 
             display: if set to true will print top-k document with their score
-
 
         Returns: A counter of the document and their BM25 score
 
