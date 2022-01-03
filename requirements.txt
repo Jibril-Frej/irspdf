@@ -3,3 +3,4 @@ pdfplumber
 snowballstemmer
 stop-words
 irspdf
+myst_parser
