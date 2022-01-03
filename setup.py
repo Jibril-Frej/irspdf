@@ -4,7 +4,7 @@ from pathlib import Path
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
-VERSION = '0.4.0'
+VERSION = '0.4.1'
 DESCRIPTION = 'A simple information retrieval system for pdf documents'
 
 
