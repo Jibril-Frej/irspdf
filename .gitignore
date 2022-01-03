@@ -146,4 +146,4 @@ cython_debug/
 
 #Custom ignore
 *.swp
-test/data/
+test
