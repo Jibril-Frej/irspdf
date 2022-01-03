@@ -1,8 +1,5 @@
-irspdf package
-==============
-
 Submodules
-----------
+==========
 
 irspdf.build module
 -------------------
@@ -29,7 +26,7 @@ irspdf.update module
    :show-inheritance:
 
 Classes
--------
+=======
 
 irspdf.ir\_collection module
 ----------------------------
