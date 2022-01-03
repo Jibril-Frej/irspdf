@@ -11,6 +11,10 @@ Standard text preprocessing for information retrieval is applied:
 
 The ranking function used is BM25.
 
+## Documentation
+
+Documentation can be found at [https://irspdf.readthedocs.io/en/latest/](https://irspdf.readthedocs.io/en/latest/).
+
 ## Installation
 
 ### Install with pip
