@@ -10,7 +10,8 @@ Welcome to irspdf's documentation!
    :maxdepth: 2
    :caption: Contents:
    
-   modules.rst
+   readme 
+   modules
 
 
 
